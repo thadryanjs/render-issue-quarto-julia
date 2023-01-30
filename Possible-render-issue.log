@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2021) (preloaded format=xelatex 2023.1.19)  30 JAN 2023 10:42
+This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2021) (preloaded format=xelatex 2023.1.19)  30 JAN 2023 10:46
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1352,7 +1352,7 @@ l.211 ...sue_files/figure-pdf/cell-3-output-1.svg}
 Here is how much of TeX's memory you used:
  36341 strings out of 478743
  747704 string characters out of 5863831
- 1371943 words of memory out of 6000000
+ 1378602 words of memory out of 6000000
  55787 multiletter control sequences out of 15000+600000
  407002 words of font info for 57 fonts, out of 8000000 for 9000
  34 hyphenation exceptions out of 8191

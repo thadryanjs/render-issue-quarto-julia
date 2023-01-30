@@ -2,21 +2,30 @@
 title: "possible-render-issue"
 ---
 
+## Description
+
+### I get a LaTeX error when I compile the document if I'm using themes for the plots
+
+When I render this document using `quarto render Possible-render-issue.qmd --to pdf` after using the `theme()` function from PlotThemes, I get a LaTeX error. It works fine when I compile to html.
+
+### Sometimes the dark themes come along even though the function is commented out
+
+Somewhat mysteriously, the html file will render with the dark theme plots sometimes even when I have the line commented out. If I add new plots they also render with the dark theme.
+
+![](dark-with-comment-out.png)
+
+## The code
 
 ```{julia}
 
 using Distributions
 using Plots
-using PlotThemes; theme(:dracula)
+using PlotThemes; # theme(:dracula)
+histogram(rand(Normal(5, 1.5), 1000))
 ```
 
 
-```{julia}
-
-v = rand(Normal(5, 1.5), 1000)
-
-histogram(v)
-```
+## Rendering & Error
 
 If I uncomment the theme, I get:
 
@@ -70,6 +79,8 @@ l.211 ...sue_files/figure-pdf/cell-3-output-1.svg}
 
 see /home/thadryan/Workspace/possible-render-issue/Possible-render-issue.log for more information
 ```
+
+## Logfile
 
 When I open that, I see:
 
@@ -1438,3 +1449,63 @@ No pages of output.
 
 ```
 
+## Environment
+
+### Quarto
+
+```{bash}
+~:) quarto --version
+1.2.258
+```
+
+### Julia
+
+```{bash}
+~:) julia --version
+julia version 1.8.0julia version 1.8.0
+```
+
+```{bash}
+[deps]
+Distributions = "31c24e10-a181-5473-b8eb-7969acd0382f"
+IJulia = "7073ff75-c697-5162-941a-fcdaad2a7d2a"
+PlotThemes = "ccf2f8ad-2431-5c83-bf29-c5338b663b6a"
+Plots = "91a5bcdd-55d7-5caf-9e0b-520d859cae80"
+```
+
+### VSCode
+
+
+```{bash}
+Version: 1.74.3
+Commit: 97dec172d3256f8ca4bfb2143f3f76b503ca0534
+Date: 2023-01-09T16:57:40.428Z
+Electron: 19.1.8
+Chromium: 102.0.5005.167
+Node.js: 16.14.2
+V8: 10.2.154.15-electron.0
+OS: Linux x64 6.1.7-200.fc37.x86_64
+Sandboxed: Yes
+```
+
+### System
+
+```{bash}
+           /:-------------:\          thadryan@leon
+        :-------------------::        OS: Fedora 
+      :-----------/shhOHbmp---:\      Kernel: x86_64 Linux 6.1.7-200.fc37.x86_64
+    /-----------omMMMNNNMMD  ---:     Uptime: 45m
+   :-----------sMMMMNMNMP.    ---:    Packages: 4430
+  :-----------:MMMdP-------    ---\   Shell: bash 5.2.15
+ ,------------:MMMd--------    ---:   Resolution: No X Server
+ :------------:MMMd-------    .---:   DE: GNOME 43.2
+ :----    oNMMMMMMMMMNho     .----:   WM: Not Found
+ :--     .+shhhMMMmhhy++   .------/   GTK Theme: Adwaita-dark [GTK2/3]
+ :-    -------:MMMd--------------:    Icon Theme: Adwaita
+ :-   --------/MMMd-------------;     Font: Cantarell 11
+ :-    ------/hMMMy------------:      Disk: 266G / 1.3T (22%)
+ :-- :dMNdhhdNMMNo------------;       CPU: Intel Core i7-6600U @ 4x 3.4GHz [64.0°C]
+ :---:sdNMMMMNds:------------:        GPU: Mesa Intel(R) HD Graphics 520 (SKL GT2)
+ :------:://:-------------::          RAM: 6846MiB / 15871MiB
+ :---------------------://
+```

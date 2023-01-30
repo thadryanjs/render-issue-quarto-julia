@@ -123,19 +123,32 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </header>
 
+<section id="description" class="level2">
+<h2 class="anchored" data-anchor-id="description">Description</h2>
+<section id="i-get-a-latex-error-when-i-compile-the-document-if-im-using-themes-for-the-plots" class="level3">
+<h3 class="anchored" data-anchor-id="i-get-a-latex-error-when-i-compile-the-document-if-im-using-themes-for-the-plots">I get a LaTeX error when I compile the document if I’m using themes for the plots</h3>
+<p>When I render this document using <code>quarto render Possible-render-issue.qmd --to pdf</code> after using the <code>theme()</code> function from PlotThemes, I get a LaTeX error. It works fine when I compile to html.</p>
+</section>
+<section id="sometimes-the-dark-themes-come-along-even-though-the-function-is-commented-out" class="level3">
+<h3 class="anchored" data-anchor-id="sometimes-the-dark-themes-come-along-even-though-the-function-is-commented-out">Sometimes the dark themes come along even though the function is commented out</h3>
+<p>Somewhat mysteriously, the html file will render with the dark theme plots sometimes even when I have the line commented out. If I add new plots they also render with the dark theme.</p>
+<p><img src="dark-with-comment-out.png" class="img-fluid"></p>
+</section>
+</section>
+<section id="the-code" class="level2">
+<h2 class="anchored" data-anchor-id="the-code">The code</h2>
 <div class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">Distributions</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">Plots</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">PlotThemes; </span><span class="fu">theme</span>(<span class="op">:</span>dracula)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>v <span class="op">=</span> <span class="fu">rand</span>(<span class="fu">Normal</span>(<span class="fl">5</span>, <span class="fl">1.5</span>), <span class="fl">1000</span>)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">histogram</span>(v)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="23">
-<p><img src="Possible-render-issue_files/figure-html/cell-3-output-1.svg" class="img-fluid"></p>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">using</span> <span class="bu">PlotThemes; </span><span class="co"># theme(:dracula)</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">histogram</span>(<span class="fu">rand</span>(<span class="fu">Normal</span>(<span class="fl">5</span>, <span class="fl">1.5</span>), <span class="fl">1000</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="139">
+<p><img src="Possible-render-issue_files/figure-html/cell-2-output-1.svg" class="img-fluid"></p>
 </div>
 </div>
+</section>
+<section id="rendering-error" class="level2">
+<h2 class="anchored" data-anchor-id="rendering-error">Rendering &amp; Error</h2>
 <p>If I uncomment the theme, I get:</p>
 <pre class="{bash}"><code>~:) quarto render Possible-render-issue.qmd --to pdf
 
@@ -185,6 +198,9 @@ l.211 ...sue_files/figure-pdf/cell-3-output-1.svg}
                                                    
 
 see /home/thadryan/Workspace/possible-render-issue/Possible-render-issue.log for more information</code></pre>
+</section>
+<section id="logfile" class="level2">
+<h2 class="anchored" data-anchor-id="logfile">Logfile</h2>
 <p>When I open that, I see:</p>
 <pre class="{bash}"><code>This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2021) (preloaded format=xelatex 2023.1.19)  30 JAN 2023 10:40
 entering extended mode
@@ -1548,6 +1564,57 @@ Here is how much of TeX's memory you used:
 
 No pages of output.
 </code></pre>
+</section>
+<section id="environment" class="level2">
+<h2 class="anchored" data-anchor-id="environment">Environment</h2>
+<section id="quarto" class="level3">
+<h3 class="anchored" data-anchor-id="quarto">Quarto</h3>
+<pre class="{bash}"><code>~:) quarto --version
+1.2.258</code></pre>
+</section>
+<section id="julia" class="level3">
+<h3 class="anchored" data-anchor-id="julia">Julia</h3>
+<pre class="{bash}"><code>~:) julia --version
+julia version 1.8.0julia version 1.8.0</code></pre>
+<pre class="{bash}"><code>[deps]
+Distributions = "31c24e10-a181-5473-b8eb-7969acd0382f"
+IJulia = "7073ff75-c697-5162-941a-fcdaad2a7d2a"
+PlotThemes = "ccf2f8ad-2431-5c83-bf29-c5338b663b6a"
+Plots = "91a5bcdd-55d7-5caf-9e0b-520d859cae80"</code></pre>
+</section>
+<section id="vscode" class="level3">
+<h3 class="anchored" data-anchor-id="vscode">VSCode</h3>
+<pre class="{bash}"><code>Version: 1.74.3
+Commit: 97dec172d3256f8ca4bfb2143f3f76b503ca0534
+Date: 2023-01-09T16:57:40.428Z
+Electron: 19.1.8
+Chromium: 102.0.5005.167
+Node.js: 16.14.2
+V8: 10.2.154.15-electron.0
+OS: Linux x64 6.1.7-200.fc37.x86_64
+Sandboxed: Yes</code></pre>
+</section>
+<section id="system" class="level3">
+<h3 class="anchored" data-anchor-id="system">System</h3>
+<pre class="{bash}"><code>           /:-------------:\          thadryan@leon
+        :-------------------::        OS: Fedora 
+      :-----------/shhOHbmp---:\      Kernel: x86_64 Linux 6.1.7-200.fc37.x86_64
+    /-----------omMMMNNNMMD  ---:     Uptime: 45m
+   :-----------sMMMMNMNMP.    ---:    Packages: 4430
+  :-----------:MMMdP-------    ---\   Shell: bash 5.2.15
+ ,------------:MMMd--------    ---:   Resolution: No X Server
+ :------------:MMMd-------    .---:   DE: GNOME 43.2
+ :----    oNMMMMMMMMMNho     .----:   WM: Not Found
+ :--     .+shhhMMMmhhy++   .------/   GTK Theme: Adwaita-dark [GTK2/3]
+ :-    -------:MMMd--------------:    Icon Theme: Adwaita
+ :-   --------/MMMd-------------;     Font: Cantarell 11
+ :-    ------/hMMMy------------:      Disk: 266G / 1.3T (22%)
+ :-- :dMNdhhdNMMNo------------;       CPU: Intel Core i7-6600U @ 4x 3.4GHz [64.0°C]
+ :---:sdNMMMMNds:------------:        GPU: Mesa Intel(R) HD Graphics 520 (SKL GT2)
+ :------:://:-------------::          RAM: 6846MiB / 15871MiB
+ :---------------------://</code></pre>
+</section>
+</section>
 
 </main>
 <!-- /main column -->
